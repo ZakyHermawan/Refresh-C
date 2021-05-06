@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdbool.h>
 
 typedef int INTEGER;
@@ -81,6 +80,8 @@ list* insert_beg(list* node) {
     printf("Masukkan data: "); scanf("%d", &data);
 
     if(node == NULL) {
+        list* tmp = (list*) malloc(sizeof(list));
+        node = tmp;
         node->data = data;
         node->next = NULL;
         return node;
@@ -166,6 +167,7 @@ list* insert_after(list* start) {
     tmp->next = NULL;
 
     if(start == NULL) {
+        printf("Karena data kosong, data terbaru akan dimasukkan ke node pertama\n");
         start = tmp;
         return start;
     }
@@ -195,6 +197,7 @@ list* insert_after(list* start) {
 
 list* delete_beg(list* start) {
     if(start == NULL) {
+        printf("Data koisong tidak ada yang akan dihapus\n");
         return start;
     }
     
@@ -209,7 +212,7 @@ list* delete_end(list* start) {
     list* ptr = start;
 
     if(start == NULL) {
-        printf("Tidak ada data yang dapat dihapus\n");
+        printf("Data koisong tidak ada yang akan dihapus\n");
         return start;
     }
 
@@ -260,8 +263,11 @@ list* delete_node(list* start) {
 
 list* delete_list(list* start) {
     list* ptr = start;
+    if(ptr == NULL) {
+        printf("Data koisong tidak ada yang akan dihapus\n");
+        return start;
+    }
     while(ptr != NULL) {
-        printf("%d\n", ptr->data);
         list* tmp = ptr;
         ptr = ptr->next;
         free(tmp);
@@ -275,6 +281,12 @@ list* reverse_list(list* start) {
     list* ptr = start;
     list* tmp = NULL;
     list* new_list = NULL;
+
+    if(ptr == NULL) {
+        printf("Data koisong tidak ada yang akan dihapus\n");
+        return start;
+    }
+
     while(ptr != NULL) {
         tmp = ptr;
         ptr = ptr->next;
@@ -286,6 +298,10 @@ list* reverse_list(list* start) {
 
 list* sort_list(list* start) {
     list* simpan = start;
+    if(start == NULL) {
+        printf("Data koisong tidak ada yang akan dihapus\n");
+        return start;
+    }
     
     while(simpan->next != NULL) {
         list* ptr = simpan->next;
@@ -299,6 +315,7 @@ list* sort_list(list* start) {
         }
         simpan = simpan->next;
     }
+    printf("Data berhasil diurutkan\n");
     return start;
 }
 
@@ -326,7 +343,6 @@ int main() {
         {
         case 1:
             start = create_ll(start);
-            printf("Linked List Created");
             break;
         case 2:
             start = display(start);
@@ -354,7 +370,6 @@ int main() {
             break;
         case 10:
             start = delete_list(start);
-            printf("Linked list Deleted\n");
             break;
         case 11:
             start = reverse_list(start);
