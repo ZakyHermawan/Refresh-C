@@ -32,9 +32,14 @@ bool isValidNode(list* start, int urutan) {
     return true;
 }
 
-list* create_ll(list* node) {
+list* create_ll(list* start) {
     int num;
     list *ptr, *newNode;
+
+    if(start != NULL) {
+        printf("Data tidak kosong, hapus semua data terlebih dahulu!\n");
+        return start;
+    }
 
     printf("Masukkan -1 untuk selesai\n");
     printf("Masukkan data: "); scanf("%d", &num);
