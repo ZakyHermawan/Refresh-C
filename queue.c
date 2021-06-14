@@ -37,7 +37,14 @@ Queue* delete(Queue* q) {
     }
     Node* ptr = q->front;
 
+    if(q->front == q->rear) {
+        free(q->front);
+        q->front=q->rear=NULL;
+        return q;
+    }
+
     q->front = q->front->next;
+    
     free(ptr);
     return q;
 }
