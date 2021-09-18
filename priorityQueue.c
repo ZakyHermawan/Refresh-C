@@ -8,6 +8,8 @@ typedef struct Node {
     struct Node* next;
 } Node;
 
+// lowest priority in the first node
+// if some nodes have the same priority with new node, the new node is on the last of the same priority node
 Node* insert(Node* node) {
     int data, priority;
     printf("Masukkan data: "); scanf("%d", &data);
@@ -17,40 +19,21 @@ Node* insert(Node* node) {
     new->priority = priority;
     new->next = NULL;
 
-    Node* first = node;
+    Node* ptr = node;
 
-    if(node == NULL) {
-        return new;
-    }
-
-    int awal = 1;
-    // utilizing short circuit
-    while(node->next != NULL && node->next->priority < priority) {
-        awal = 0;
-        node = node->next;
-    }
-
-    if(awal) {
-        if(node->priority < priority) {
-            node->next = new;
-            return node;
-        }
+    if(node == NULL || node->priority > priority) {
         new->next = node;
         return new;
     }
 
-    if(node->next != NULL) {
-        Node* save = node->next;
-        node->next = new;
-        new->next = save;
-        return first;
+    while(ptr->next != NULL && ptr->next <= priority) {
+        ptr = ptr->next;
     }
 
-    node->next = new;
-    return first;
-
+    new->next = ptr->next;
+    ptr->next = new;
     
-
+    return first;
 
 }
 
